@@ -16,7 +16,8 @@ Discourse::Application.configure do
   config.assets.css_compressor = :sass
 
   # stuff should be pre-compiled
-  config.assets.compile = false
+  # config.assets.compile = false
+  config.assets.initialize_on_precompile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
