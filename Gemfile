@@ -67,6 +67,7 @@ unless Bundler::Dependency::PLATFORM_MAP.include? :mri_21
    end
 end
 
+
 gem 'seed-fu', '~> 2.3.3'
 
 if rails_master?
