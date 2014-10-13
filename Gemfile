@@ -84,6 +84,7 @@ gem 'rails-observers'
 # would continue to work with Rails 4.1.6+ when it is released.
 gem 'mail', '~> 2.5.4'
 
+
 #gem 'redis-rails'
 gem 'hiredis'
 gem 'redis', require:  ["redis", "redis/connection/hiredis"]
