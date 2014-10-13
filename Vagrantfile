@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
 
   # Make this VM reachable on the host network as well, so that other
   # VM's running other browsers can access our dev server.
-  config.vm.network :private_network, ip: "192.168.10.200"
+  config.vm.network :public_network, ip: "192.168.10.1"
 
   # Make it so that network access from the vagrant guest is able to
   # use SSH private keys that are present on the host without copying
@@ -17,7 +17,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :virtualbox do |v|
     # This setting gives the VM 1024MB of RAM instead of the default 384.
-    v.customize ["modifyvm", :id, "--memory", [ENV['DISCOURSE_VM_MEM'].to_i, 1024].max]
+    v.gui = true
+    v.customize ["modifyvm", :id, "--memory", [ENV['DISCOURSE_VM_MEM'].to_i, 2000].max]
 
     # Who has a single core cpu these days anyways?
     cpu_count = 2
@@ -43,7 +44,9 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 1080, host: 4080 # Mailcatcher
 
   nfs_setting = RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/
-  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", :nfs => nfs_setting
+    config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", :nfs => true
+  # config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", :nfs => nfs_setting
+  # config.vm.shared_folder("v-root", "/vagrant", ".", :nfs => true)
 
   config.vm.provision :shell, :inline => "apt-get -qq update && apt-get -qq -y install ruby1.9.3 build-essential && gem install chef --no-rdoc --no-ri --conservative"
 
