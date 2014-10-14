@@ -1,11 +1,13 @@
 require "sidekiq/pausable"
 
 Sidekiq.configure_client do |config|
-  config.redis = Discourse.sidekiq_redis_config
+  # config.redis = Discourse.sidekiq_redis_config
+  config.redis = { host: host, port: port) }
 end
 
 Sidekiq.configure_server do |config|
-  config.redis = Discourse.sidekiq_redis_config
+  # config.redis = Discourse.sidekiq_redis_config
+  config.redis = { host: host, port: port }
   # add our pausable middleware
   config.server_middleware do |chain|
     chain.add Sidekiq::Pausable

@@ -91,7 +91,7 @@ redis_password = ENV['DISCOURSE_REDIS_PASSWORD']
 
 
 # eg: redis://:password@host:port
-asset_redis_url = redis://rediscloud:Lht4Rs3eAG8NxLjl@pub-redis-15275.us-east-1-2.2.ec2.garantiadata.com:15275"
+asset_redis_url = ENV['REDISCLOUD_URL']
 
 # enable Cross-origin Resource Sharing (CORS) directly at the application level
 enable_cors = false
