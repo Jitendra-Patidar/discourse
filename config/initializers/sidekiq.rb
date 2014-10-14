@@ -2,7 +2,8 @@ require "sidekiq/pausable"
 
 Sidekiq.configure_client do |config|
   # config.redis = Discourse.sidekiq_redis_config
-  config.redis = { host: host, port: port) }
+  # config.redis = { host: host, port: port }  OLD
+  config.redis = { host: host, port: port }
 end
 
 Sidekiq.configure_server do |config|
