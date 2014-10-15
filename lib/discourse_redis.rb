@@ -20,9 +20,28 @@ class DiscourseRedis
     "redis://#{(':' + config['password'] + '@') if config['password']}#{config['host']}:#{config['port']}/#{config['db']}"
   end
 
+  # def initialize
+  #  @config = DiscourseRedis.config
+  #  @redis = DiscourseRedis.raw_connection(@config)
+  # end
+
+  # def url
+  #  self.class.url(@config)
+  # end
+
   def initialize
-    @config = DiscourseRedis.config
-    @redis = DiscourseRedis.raw_connection(@config)
+    @config = YAML::load(File.open("#{Rails.root}/config/redis.yml"))[Rails.env]
+    redis_opts = {
+      :host => @config['host'],
+      :port => @config['port'],
+      :password => @config['password'],
+      :db => @config['db']}
+    @redis = Redis.new(redis_opts)    
+  end
+
+  # Didn't even look at the code to see if this is necessary
+  def url
+    "redis://#{@config['password']}@#{@config['host']}:#{@config['port']}/#{@config['db']}"
   end
 
   def without_namespace
@@ -30,9 +49,7 @@ class DiscourseRedis
     @redis
   end
 
-  def url
-    self.class.url(@config)
-  end
+  
 
   # prefix the key with the namespace
   def method_missing(meth, *args, &block)

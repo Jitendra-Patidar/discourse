@@ -131,10 +131,17 @@ module Discourse
 
     require 'discourse_redis'
     require 'logster/redis_store'
+
     # Use redis for our cache
-    config.cache_store = DiscourseRedis.new_redis_store
-    $redis = DiscourseRedis.new
-    Logster.store = Logster::RedisStore.new(DiscourseRedis.new)
+
+    redis_config = YAML::load(File.open("#{Rails.root}/config/redis.yml"))[Rails.env]
+    redis_opts = {
+      host: redis_config["host"],
+      port: redis_config["port"],
+      password: redis_config["password"],
+      namespace: -> { DiscourseRedis.namespace }
+    }
+    config.cache_store = :redis_store, redis_opts
 
     # we configure rack cache on demand in an initializer
     # our setup does not use rack cache and instead defers to nginx
