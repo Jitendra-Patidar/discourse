@@ -85,9 +85,11 @@ gem 'rails-observers'
 gem 'mail', '~> 2.5.4'
 
 
-#gem 'redis-rails'
+
 gem 'hiredis'
 gem 'redis', require:  ["redis", "redis/connection/hiredis"]
+gem 'redis-store'
+gem 'redis-rails'
 
 # We use some ams 0.8.0 features, need to amend code
 # to support 0.9 etc, bench needs to run and ensure no
