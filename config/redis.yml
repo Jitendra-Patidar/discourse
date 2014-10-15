@@ -20,7 +20,7 @@ staging:
 
 
 production:
-  <<: *defaults
       host: "pub-redis-15275.us-east-1-2.2.ec2.garantiadata.com"
       port: 15275
       password: "Lht4Rs3eAG8NxLjl"
+      db: "redis-sleepy-springs-2944"
